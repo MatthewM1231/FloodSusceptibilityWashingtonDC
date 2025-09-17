@@ -1,0 +1,147 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(readr)
+library(stringr)
+library(tidyverse)
+```
+
+### ACS Data
+
+We'll now do the same procedure above for the American Community Survey Data.
+
+If you inspected the csv file (for instance in excel), you'd see that the first two rows are both column names. The actually descriptive column name is row 2, so we will use one of the features of **read_csv** from **readr** to skip the first row.
+
+
+```{r}
+dp02 = read_csv("data/acs_dp02_data.csv", skip = 1, show_col_types = F)
+dp03 = read_csv("data/acs_dp03_data.csv", skip = 1, show_col_types = F)
+dp04 = read_csv("data/acs_dp04_data.csv", skip = 1, show_col_types = F)
+dp05 = read_csv("data/acs_dp05_data.csv", skip = 1, show_col_types = F)
+```
+
+
+#### DP02
+
+
+```{r}
+head(dp02)
+colnames(dp02)
+# dim(dp02)
+# sapply(dp02, class)
+
+dp02_tibble = as_tibble(dp02) %>% 
+  select(!matches("margin of error!!", ignore.case = T)) %>%
+  select(!contains("Percent!!")) %>%
+  select(!contains("Percent Margin of Error!!")) %>%
+  mutate(Geography = str_remove(Geography, "1400000US")) %>%
+  select(!c("Geographic Area Name")) %>%
+  rename(geoid = Geography) %>%
+  mutate(geoid = as.numeric(geoid))
+colnames(dp02_tibble) = gsub(pattern = "^Estimate!!", replacement = "", colnames(dp02_tibble), ignore.case = T)
+colnames(dp02_tibble) = gsub(pattern = "!!", replacement = "_", colnames(dp02_tibble))
+colnames(dp02_tibble) = tolower(colnames(dp02_tibble))
+```
+
+
+```{r}
+dp02 = dp02_tibble
+head(dp02)
+```
+
+
+#### DP03
+
+
+```{r}
+head(dp03)
+colnames(dp03)
+# dim(dp03)
+# sapply(dp03, class)
+
+dp03_tibble = as_tibble(dp03) %>% 
+  select(!matches("Margin of Error!!", ignore.case = T)) %>%
+  select(!contains("Percent!!")) %>%
+  select(!contains("Percent Margin of Error!!")) %>%
+  mutate(Geography = str_remove(Geography, "1400000US")) %>%
+  select(!c("Geographic Area Name")) %>%
+  rename(geoid = Geography) %>%
+  mutate(geoid = as.numeric(geoid))
+colnames(dp03_tibble) = gsub(pattern = "^Estimate!!", replacement = "", colnames(dp03_tibble))
+colnames(dp03_tibble) = gsub(pattern = "!!", replacement = "_", colnames(dp03_tibble))
+colnames(dp03_tibble) = tolower(colnames(dp03_tibble))
+```
+
+
+```{r}
+dp03 = dp03_tibble
+head(dp03)
+```
+
+
+#### DP04
+
+
+```{r}
+head(dp04)
+colnames(dp04)
+# dim(dp04)
+# sapply(dp04, class)
+
+dp04_tibble = as_tibble(dp04) %>% 
+  select(!matches("Margin of Error!!", ignore.case = T)) %>%
+  select(!contains("Percent!!")) %>%
+  select(!contains("Percent Margin of Error!!")) %>%
+  mutate(Geography = str_remove(Geography, "1400000US")) %>%
+  select(!c("Geographic Area Name")) %>%
+  rename(geoid = Geography) %>%
+  mutate(geoid = as.numeric(geoid))
+colnames(dp04_tibble) = gsub(pattern = "^Estimate!!", replacement = "", colnames(dp04_tibble))
+colnames(dp04_tibble) = gsub(pattern = "!!", replacement = "_", colnames(dp04_tibble))
+colnames(dp04_tibble) = tolower(colnames(dp04_tibble))
+```
+
+
+```{r}
+dp04 = dp04_tibble
+head(dp04)
+```
+
+
+#### DP05
+
+
+```{r}
+head(dp05)
+colnames(dp05)
+# dim(dp05)
+# sapply(dp05, class)
+
+dp05_tibble = as_tibble(dp05) %>% 
+  select(!matches("Margin of Error!!", ignore.case = T)) %>%
+  select(!contains("Percent!!")) %>%
+  select(!contains("Percent Margin of Error!!")) %>%
+  mutate(Geography = str_remove(Geography, "1400000US")) %>%
+  select(!c("Geographic Area Name")) %>%
+  rename(geoid = Geography) %>%
+  mutate(geoid = as.numeric(geoid))
+colnames(dp05_tibble) = gsub(pattern = "^Estimate!!", replacement = "", colnames(dp05_tibble))
+colnames(dp05_tibble) = gsub(pattern = "!!", replacement = "_", colnames(dp05_tibble))
+colnames(dp05_tibble) = tolower(colnames(dp05_tibble))
+```
+
+
+```{r}
+dp05 = dp05_tibble
+head(dp05)
+```
+
+```{r}
+write_csv(dp02, "data/dp02_cleaned.csv")
+write_csv(dp03, "data/dp03_cleaned.csv")
+write_csv(dp04, "data/dp04_cleaned.csv")
+write_csv(dp05, "data/dp05_cleaned.csv")
+```
