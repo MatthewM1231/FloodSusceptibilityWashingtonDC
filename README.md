@@ -44,6 +44,6 @@ Infrastructure Variables:
 **Percent of Houses within a Census Tract built before 1980**
 
 
-With these variables, I have conducted a principal component analysis and have used the results of this analysis to create a comprehensive dashboard using R-Shiny that allows the user to directly compare flood susceptibility, socioeconomic vulnerability, and infrastructure presence in Washington D.C. in the form of a map. This also allows the user to view the binned or raw indices produced by the principal component analysis in order to assess which census tracts in the district are the most/least vulnerable.
+Using these variables, I have conducted several principal component analyses and have used the results of these analyses as well as manual weighting where needed to derive a set of indices to quantify each census tract's composite vulnerability. Using these data, I also compiled a comprehensive dashboard using R-Shiny that allows the user to directly compare flood susceptibility, socioeconomic vulnerability, and infrastructure presence in Washington D.C. in the form of a map. This also allows the user to view the binned or raw indices produced by the principal component analysis in order to assess which census tracts in the district are the most/least vulnerable.
 
 PIT-UN contributed funding for this work. PIT-UN is a project of the New Venture Fund (NVF), a 501(c)(3) public charity that supports innovative and effective public interest projects.
